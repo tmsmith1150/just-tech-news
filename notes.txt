@@ -1,0 +1,132 @@
+if you use npm init -y you will need to update your package.json to "main": "server.js" instead of "main": "index.js" then change "start": "node server.js"
+
+create your files then run "npm install express sequelize mysql2"
+
+From the root directory of your project, type "mysql -u root -p" and press Return.
+"source db/schema.sql"
+"show databases;"
+
+In MySql Shell to seed data not in a file
+use just_tech_news_db;
+INSERT INTO post (title, post_url, user_id, created_at, updated_at)
+VALUES ("Taskmaster goes public!", "https://taskmaster/press", 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+
+"npm install dotenv"
+
+
+
+
+We're using an Express.js router again to help us keep the routes organized. We're even using the four main methods for an API: GET, POST, PUT, and DELETE.
+
+This is the second time we've used all four of these methods, so it's a good time to take a minute to think about how we're keeping them organized. These endpoints for the server are going to be accessible at the /api/users URL. When we create posts and comments later, we'll make those endpoints accessible at /api/posts and /api/comments. Notice a pattern?
+
+This naming convention along with the use of the HTTP methods follow a famous API architectural pattern called REST, or Representational State Transfer. APIs built following this pattern are what's known as RESTful APIs
+
+Name your endpoints in a way that describes the data you're interfacing with, such as /api/users.
+
+Use HTTP methods like GET, POST, PUT, and DELETE to describe the action you're performing to interface with that endpoint; for example, GET /api/users means you should expect to receive user data.
+
+Use the proper HTTP status codes like 400, 404, and 500 to indicate errors in a request.
+
+
+RESTful APIs isn't a language or library to learn like JavaScript or Sequelize, but rather a pattern that developers put to use when building an API
+
+
+
+.findAll()  =   SELECT * FROM users;
+.findOne()  =   SELECT * FROM users WHERE id = 1
+.create() using req.body  =  INSERT INTO users (username, email, password)
+                               VALUES ("Lernantino", "lernantino@gmail.com", "password1234")
+.update() use use both req.body and req.params  =
+UPDATE users
+SET username = "Lernantino", email = "lernantino@gmail.com", password = "newPassword1234"
+WHERE id = 1;                             
+
+
+
+BCRYPT
+Add the bcrypt package to the application by installing the package from npm, then importing the package into the User.js file.
+npm install bcrypt
+(Can you think of a reason why it is recommended to run the password hashing step as an async function although a sync version is also available?
+The hashing done by bcrypt is CPU intensive, so the sync version will block other functions from running, effectively stalling the application until the hashing process has been completed.)
+
+ hooks: {
+        // set up beforeCreate lifecycle "hook" functionality
+        // In the bcrypt hash function, we pass in the userData object that contains the plaintext password in the password property. We also pass in a saltRound value of 10.
+        async beforeCreate(userData) {
+         return bcrypt.hash(userData.password, 10).then(newUserData => {
+           return newUserData
+         });
+       } 
+      //  newUserData is a Promise object with the new hashed password
+    }, 
+
+    USING ASYNC/AWAIT
+    hooks: {
+  // set up beforeCreate lifecycle "hook" functionality
+  async beforeCreate(newUserData) {
+    newUserData.password = await bcrypt.hash(newUserData.password, 10);
+    return newUserData;
+  },
+}
+The async keyword is used as a prefix to the function that contains the asynchronous function. await can be used to prefix the async function, which will then gracefully assign the value from the response to the newUserData's password property. The newUserData is then returned to the application with the hashed password.
+
+
+{
+	"title": "I know what you'll find, it's in your mind, it's what you want to see...",
+	"post_url": "https://www.ozzy.com/feed/",
+	"user_id": 1,
+  "created_at": "CURRENT_TIMESTAMP",
+  "updated_at": "CURRENT_TIMESTAMP"
+}
+{
+	"title": "You, looking at me, looking at you",
+	"post_url": "https://www.ozzy.com/feed/",
+	"user_id": 1,
+  "created_at": "CURRENT_TIMESTAMP",
+  "updated_at": "CURRENT_TIMESTAMP"
+}
+{
+	"title": "Leave me alone, don't want your promises no more",
+	"post_url": "https://www.ozzy.com/feed/",
+	"user_id": 1,
+  "created_at": "CURRENT_TIMESTAMP",
+  "updated_at": "CURRENT_TIMESTAMP"
+}
+{
+	"title": "You don't need a ticket to fly with me, I'm free",
+	"post_url": "https://www.ozzy.com/feed/",
+	"user_id": 1,
+  "created_at": "CURRENT_TIMESTAMP",
+  "updated_at": "CURRENT_TIMESTAMP"
+}
+
+{
+  "username": "shelly",
+  "email": "shelly@shelly.com",
+  "password": "queen1tj"
+}
+{
+  "username": "hannabear",
+  "email": "hannabear@shelly.com",
+  "password": "hannabear"
+}
+{
+  "username": "shaneyack",
+  "email": "shaneyack@shelly.com",
+  "password": "shaneyack"
+}
+{
+  "user_id": 1,
+  "post_id": 1
+}
+{
+  "user_id": 1,
+  "post_id": 2
+}
+{
+  "user_id": 1,
+  "post_id": 3
+}
