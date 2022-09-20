@@ -3,8 +3,10 @@ if you use npm init -y you will need to update your package.json to "main": "ser
 create your files then run "npm install express sequelize mysql2"
 
 From the root directory of your project, type "mysql -u root -p" and press Return.
+mysql -u root -p
 "source db/schema.sql"
 "show databases;"
+use just_tech_news_db
 
 In MySql Shell to seed data not in a file
 use just_tech_news_db;
@@ -12,8 +14,13 @@ INSERT INTO post (title, post_url, user_id, created_at, updated_at)
 VALUES ("Taskmaster goes public!", "https://taskmaster/press", 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
-
+npm install
+npm install express sequelize mysql2
 "npm install dotenv"
+npm install bcrypt
+npm run seed
+npm install express-handlebars
+npm i express-session connect-session-sequelize
 
 
 
@@ -49,6 +56,7 @@ WHERE id = 1;
 BCRYPT
 Add the bcrypt package to the application by installing the package from npm, then importing the package into the User.js file.
 npm install bcrypt
+
 (Can you think of a reason why it is recommended to run the password hashing step as an async function although a sync version is also available?
 The hashing done by bcrypt is CPU intensive, so the sync version will block other functions from running, effectively stalling the application until the hashing process has been completed.)
 
@@ -77,36 +85,28 @@ The async keyword is used as a prefix to the function that contains the asynchro
 {
 	"title": "I know what you'll find, it's in your mind, it's what you want to see...",
 	"post_url": "https://www.ozzy.com/feed/",
-	"user_id": 1,
-  "created_at": "CURRENT_TIMESTAMP",
-  "updated_at": "CURRENT_TIMESTAMP"
+	"user_id": 1
 }
 {
 	"title": "You, looking at me, looking at you",
 	"post_url": "https://www.ozzy.com/feed/",
-	"user_id": 1,
-  "created_at": "CURRENT_TIMESTAMP",
-  "updated_at": "CURRENT_TIMESTAMP"
+	"user_id": 1
 }
 {
-	"title": "Leave me alone, don't want your promises no more",
-	"post_url": "https://www.ozzy.com/feed/",
-	"user_id": 1,
-  "created_at": "CURRENT_TIMESTAMP",
-  "updated_at": "CURRENT_TIMESTAMP"
+	"title": "The less that you give, you're a taker",
+	"post_url": "https://www.dio.com/feed/",
+	"user_id": 1
 }
 {
-	"title": "You don't need a ticket to fly with me, I'm free",
-	"post_url": "https://www.ozzy.com/feed/",
-	"user_id": 1,
-  "created_at": "CURRENT_TIMESTAMP",
-  "updated_at": "CURRENT_TIMESTAMP"
+	"title": "Do me a wrong, you're a bringer of evil",
+	"post_url": "https://www.dio.com/feed/",
+	"user_id": 1
 }
 
 {
   "username": "shelly",
   "email": "shelly@shelly.com",
-  "password": "queen1tj"
+  "password": "shelly"
 }
 {
   "username": "hannabear",
@@ -117,6 +117,11 @@ The async keyword is used as a prefix to the function that contains the asynchro
   "username": "shaneyack",
   "email": "shaneyack@shelly.com",
   "password": "shaneyack"
+}
+{
+  "username": "brad",
+  "email": "brad@shelly.com",
+  "password": "brad"
 }
 {
   "user_id": 1,
@@ -130,3 +135,16 @@ The async keyword is used as a prefix to the function that contains the asynchro
   "user_id": 1,
   "post_id": 3
 }
+
+
+
+
+
+
+npm install express-handlebars
+
+
+
+Use HTTP methods like GET, POST, PUT, and DELETE to describe the action you're performing to interface with that endpoint; for example, GET /api/users means you should expect to receive user data.
+
+Use the proper HTTP status codes like 400, 404, and 500 to indicate errors in a request.

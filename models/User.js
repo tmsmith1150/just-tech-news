@@ -3,15 +3,17 @@ const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
 // create our User model
-class User extends Model { // set up method to run on instance data (per user) to check password
+class User extends Model {
+  // set up method to run on instance data (per user) to check password
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
-  }}
+  }
+}
 
 // define table columns and configuration
 User.init(
     {
-        // define an id COLUMN
+        // define an id column
         id: {
           // use the special Sequelize DataTypes object provide what type of data it is
           type: DataTypes.INTEGER,
@@ -22,12 +24,12 @@ User.init(
           // turn on auto increment
           autoIncrement: true
         },
-        // define a username COLUMN
+        // define a username column
         username: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        // define an email COLUMN
+        // define an email column
         email: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -35,11 +37,10 @@ User.init(
           unique: true,
           // if allowNull is set to false, we can run our data through validators before creating the table data
           validate: {
-            // <string>@<string>.<string>
             isEmail: true
           }
         },
-        // define a password COLUMN
+        // define a password column
         password: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -50,22 +51,20 @@ User.init(
         }
       },
   {
-    // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
-    
     hooks: {
         // set up beforeCreate lifecycle "hook" functionality
-        // In the bcrypt hash function, we pass in the userData object that contains the plaintext password in the password property. We also pass in a saltRound value of 10.
         async beforeCreate(newUserData) {
-          newUserData.password = await bcrypt.hash(newUserData.password, 10);
-          return newUserData;
-        },
-      //  newUserData is a Promise object with the new hashed password
-       // set up beforeUpdate lifecycle "hook" functionality
-        async beforeUpdate(updatedUserData) {
-          updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-          return updatedUserData;
-        }
-    },  
+            newUserData.password = await bcrypt.hash(newUserData.password, 10);
+            return newUserData;
+          },
+           // set up beforeUpdate lifecycle "hook" functionality
+  async beforeUpdate(updatedUserData) {
+    updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+    return updatedUserData;
+  }
+
+    },
+    // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
 
     // pass in our imported sequelize connection (the direct connection to our database)
     sequelize,
